@@ -198,3 +198,40 @@
 
 (and (oddp 3) (oddp 5) (oddp 9)) ;=> t
 (or (oddp 2) (oddp 0) (oddp 1)) ;=> t
+
+
+;; if you see that, these operators appears only mathematical boolean operators
+;; and nothing about condinitional evaluation. But we had some interesting thing.
+;; On really, he can be used for conditional behavior!
+;; For instance, here's now a way to set a variable global to t when the number is even.
+
+(defun crazy-evenp (x)
+  (let (is-even)
+  (or (oddp x) (setf is-even t)) ;; HMM, so black magic
+  is-even))
+
+(crazy-evenp 5) ;; -> nil
+(crazy-evenp 6) ;; -> T
+
+
+;; That works because boolean operations are lazy, if doesn't necessary more evaluate the other expressions
+;; so we don't evaluate that! For (crazy-evenp 5) returns nil because (oddp 5) is true, as for 'or' operation
+;; we need only a uniq true value, the (setf is-even t) is not evaluated. We can call that 'shortcut Boolean evaluation'
+;; and lisp use that.
+
+;; Considering that the follow expression can be translated:
+
+(if *file-modified*
+    (if (ask-user-about-saving)
+        (save-file)))
+
+(and *file-modified* (ask-user-about-saving) (save-file))
+
+;; The and evaluate sequencialy the expressions, but for that, (save-file) needs to returns a t value althoug
+;; that kind of function don't explicit mean that, save-file may return other things.
+;; We have a problem with that and some lispers can be say is not cool.
+;; A third version of that, and a bit more clear, can be:
+
+(if (and *file-modified*
+         (ask-user-about-saving))
+    (save-file))
