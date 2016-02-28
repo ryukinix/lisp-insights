@@ -8,7 +8,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [X] Chapter 2
  - [X] Chapter 3
  - [X] Chapter 4
- - [ ] Chapter 5
+ - [X] Chapter 5
  - [ ] Chapter 6
  - [ ] Chapter 7
  - [ ] Chapter 8
