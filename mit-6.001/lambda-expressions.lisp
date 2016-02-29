@@ -10,6 +10,9 @@
       (+ (funcall func a)
          (sigma-sum func (funcall next a) b))))
 
+;; I would like to avoid the use of 'funcall' for calling
+;; lambda expressions passed to sigma-sum, is ugly.
+
 (defun square (x)
   (* x x))
 
