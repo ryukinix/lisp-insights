@@ -16,24 +16,26 @@
                         (square-root 165465)
                         ))
 
+(defun square (x)
+  (* x x))
+
+(defun average (x y) 
+  (/ (+ x y) 2))
+
 ;; square-root black box
 ;; functional
 (defun square-root (x) 
-  (labels ((square (x)
-              (* x x))
-           (average (x y) 
-             (/ (+ x y) 2))
-           (improve (guess x)
+  (labels ((improve (guess)
              (average guess (/ x guess)))
-           (good-enough? (guess x)
+           (good-enough? (guess)
              (< (abs (- (square guess) x))
                 *error-limit*))
-           (try (guess x)
-             (if (good-enough? guess x)
+           (try (guess)
+             (if (good-enough? guess)
                  guess
-                 (try (improve guess x) x))))
+                 (try (improve guess)))))
   
-  (float (try 1 x))))
+  (float (try 1))))
 
 
 ;; eval-test black-box
