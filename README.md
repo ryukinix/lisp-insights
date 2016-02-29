@@ -26,7 +26,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [ ] Chapter 20
 
 
-# [MIT 6.0001 Course, overview Lisp: Structures and Interpretations](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
+# [MIT 6.001 Course, overview Lisp: Structures and Interpretations](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
 
  - [X] Lecture 1A 
  - [X] Lecture 1B
