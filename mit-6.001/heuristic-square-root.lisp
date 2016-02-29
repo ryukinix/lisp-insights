@@ -24,12 +24,12 @@
 
 ;; square-root black box
 ;; functional
-(defun square-root (x) 
+(defun square-root (x &key (error-limit *error-limit*)) 
   (labels ((improve (guess)
              (average guess (/ x guess)))
            (good-enough? (guess)
              (< (abs (- (square guess) x))
-                *error-limit*))
+                error-limit))
            (try (guess)
              (if (good-enough? guess)
                  guess
