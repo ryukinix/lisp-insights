@@ -40,6 +40,9 @@
 (defparameter *location* 'living-room)
 
 
+;; commands whose the user can be type at repl
+(defparameter *allowed-commands* '(inventory look walk pickup drop))
+
 ;; a lot of tests for running
 ;; on the end of that script
 (defparameter *tests* '((describe-path '(garden west door))
@@ -176,9 +179,63 @@
   "Show the inventory at actual carrying items"
   (cons 'items-  *inventory*))
 
+;; first version: simple
+(defun game-repl-noob () ;; useless
+  (loop (print (eval (read)))))
+
+;; wishful thinking
+(defun game-repl ()
+  "The game-repl protecting
+   the user for black magic of
+   lisp repl"
+  (let ((cmd (game-read)))
+    (unless (eq (car cmd) 'quit)
+      (game-print (game-eval cmd))
+      (game-repl))))
+
+;; now we need define:
+;; game-print, game-read, game-eval
+
+(defun game-read ()
+  "Read an expressions without () from stdin
+   and return the expression with ().
+   Example: walk lest -> (walk 'lest)"
+  (let ((cmd (read-from-string
+              (concatenate 'string "(" (read-line) ")"))))
+    (flet ((quote-it (x)
+             (list 'quote x)))
+      (cons (car cmd) (mapcar #'quote-it (cdr cmd))))))
+
+(defun game-eval (sexp)
+  "Eval only commands alloweds"
+  (if (member (car sexp) *allowed-commands*)
+      (eval sexp)
+      '(i do not know that command)))
+
+;; i need understand better that black magic below
+(defun tweak-text (lst caps lit)
+  "Make a correct captilize in a list of symbols"
+  (when lst
+    (let ((item (car lst))
+          (rest (cdr lst)))
+      (cond ((eq item #\space) (cons item (tweak-text rest caps lit)))
+            ((member item '(#\! #\? #\.)) (cons item (tweak-text rest t lit)))
+            ((eq item #\") (tweak-text rest caps (not lit)))
+             (lit (cons item (tweak-text rest nil lit)))
+            ((or caps lit) (cons (char-upcase item) (tweak-text rest nil lit)))
+            (t (cons (char-downcase item) (tweak-text rest nil nil)))))))
+
+(defun game-print (lst)
+  (princ (coerce (tweak-text (coerce (string-trim "() "
+                                                  (prin1-to-string lst))
+                                     'list)
+                             t
+                             nil)
+                 'string))
+  (fresh-line))
 
 ;; no side effect
-(defun menu ()
+(defun help ()
   "Show a descriptions of possible commands to interact
    with the lisp world."
   '(options -> (look) (walk ?direction) (inventory) (pickup ?object) (drop ?object)))
@@ -189,7 +246,6 @@
    and print the output"
   (print (cons 'command-execute-> `(,command)))
   (print (cons 'output-of-command-> (eval command))))
-
 (defun run-tests (tests)
   (mapcar #'eval-printing tests))
 

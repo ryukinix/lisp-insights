@@ -2,7 +2,7 @@
 A personal repository for annotation about learning lisp patterns.
 The actual content are answers and code covering the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.0001 Course about Structures and Interpretations.
 
-# Land of Lisp book (reading) [91/482]
+# Land of Lisp book (reading) [97/482]
 
  - [X] Chapter 1
  - [X] Chapter 2
