@@ -1,12 +1,12 @@
 ;; Common Lisp Script
 ;; Manoel Vilela
 
-#| A heuristic method to calculate the 
-   square root of a number x based on the 
+#| A heuristic method to calculate the
+   square root of a number x based on the
    Hero of Alexandria's alogrithm.
  |#
 
- 
+
 (defparameter *error-limit* 0.001)
 
 (defparameter *tests* '((square-root 2)
@@ -19,12 +19,12 @@
 (defun square (x)
   (* x x))
 
-(defun average (x y) 
+(defun average (x y)
   (/ (+ x y) 2))
 
 ;; square-root black box
-;; functional
-(defun square-root (x &key (error-limit *error-limit*)) 
+;; functional by function composition
+(defun square-root (x &key (error-limit *error-limit*))
   (labels ((improve (guess)
              (average guess (/ x guess)))
            (good-enough? (guess)
@@ -34,7 +34,7 @@
              (if (good-enough? guess)
                  guess
                  (try (improve guess)))))
-  
+
   (float (try 1))))
 
 
