@@ -32,7 +32,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [X] Lecture 1B
  - [X] Lecture 2A 
  - [X] Lecture 2B
- - [ ] Lecture 3A 
+ - [X] Lecture 3A 
  - [ ] Lecture 3B
  - [ ] Lecture 4A 
  - [ ] Lecture 4B
