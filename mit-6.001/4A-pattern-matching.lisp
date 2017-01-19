@@ -174,7 +174,7 @@
                 (simplify-exp
                   (instantiate
                    (skeleton (car rules))
-                   dict)))))))
+                   dict))))))
     (scan the-rules))
   (defun simplify-parts (exp)
     (if (null exp)
