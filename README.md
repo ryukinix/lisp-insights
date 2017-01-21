@@ -40,7 +40,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [X] Lecture 5A 
  - [X] Lecture 5B
  - [X] Lecture 6A 
- - [ ] Lecture 6B
+ - [X] Lecture 6B
  - [ ] Lecture 7A 
  - [ ] Lecture 7B
  - [ ] Lecture 8A 
