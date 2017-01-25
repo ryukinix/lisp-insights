@@ -1,6 +1,6 @@
 # lisp-insights
 A personal repository for annotation about learning lisp patterns.
-The actual content are answers and code covering the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.0001 Course about Structures and Interpretations.
+The actual content are answers and code covering the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course about Structures and Interpretations of Computer Programs.
 
 # Land of Lisp book (reading) [97/482]
 
@@ -27,7 +27,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [ ] Chapter 20
 
 
-# [MIT 6.001 Course, overview Lisp: Structures and Interpretations](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
+# [MIT 6.001 Structures and Interpretations of Computer Programs](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
 
  - [x] Lecture 1A 
  - [x] Lecture 1B
