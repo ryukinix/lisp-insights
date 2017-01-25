@@ -4,12 +4,12 @@ The actual content are answers and code covering the book [Land of Lisp](http://
 
 # Land of Lisp book (reading) [97/482]
 
- - [X] Chapter 1
- - [X] Chapter 2
- - [X] Chapter 3
- - [X] Chapter 4
- - [X] Chapter 5
- - [X] Chapter 6
+ - [x] Chapter 1
+ - [x] Chapter 2
+ - [x] Chapter 3
+ - [x] Chapter 4
+ - [x] Chapter 5
+ - [x] Chapter 6
  - [ ] Chapter 6.5 (lambda chapter)
  - [ ] Chapter 7
  - [ ] Chapter 8
@@ -29,19 +29,19 @@ The actual content are answers and code covering the book [Land of Lisp](http://
 
 # [MIT 6.001 Course, overview Lisp: Structures and Interpretations](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
 
- - [X] Lecture 1A 
- - [X] Lecture 1B
- - [X] Lecture 2A 
- - [X] Lecture 2B
- - [X] Lecture 3A 
- - [X] Lecture 3B
- - [X] Lecture 4A 
- - [X] Lecture 4B
- - [X] Lecture 5A 
- - [X] Lecture 5B
- - [X] Lecture 6A 
- - [X] Lecture 6B
- - [X] Lecture 7A 
+ - [x] Lecture 1A 
+ - [x] Lecture 1B
+ - [x] Lecture 2A 
+ - [x] Lecture 2B
+ - [x] Lecture 3A 
+ - [x] Lecture 3B
+ - [x] Lecture 4A 
+ - [x] Lecture 4B
+ - [x] Lecture 5A 
+ - [x] Lecture 5B
+ - [x] Lecture 6A 
+ - [x] Lecture 6B
+ - [x] Lecture 7A 
  - [x] Lecture 7B
  - [ ] Lecture 8A 
  - [ ] Lecture 8B
