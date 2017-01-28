@@ -1,7 +1,6 @@
 ;; Common Lisp Script
 ;; Manoel Vilela -- but i not have wrote that script
 
-(load "~/quicklisp/setup.lisp")
 (ql:quickload 'lispbuilder-sdl)
 (ql:quickload 'lispbuilder-sdl-gfx)
 (ql:quickload 'alexandria)
