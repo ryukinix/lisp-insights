@@ -48,4 +48,4 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [x] Lecture 9A 
  - [x] Lecture 9B
  - [x] Lecture 10A
- - [ ] Lecture 10B
+ - [x] Lecture 10B
