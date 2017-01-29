@@ -10,7 +10,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [x] Chapter 4
  - [x] Chapter 5
  - [x] Chapter 6
- - [ ] Chapter 6.5 (lambda chapter)
+ - [x] Chapter 6.5 (lambda chapter)
  - [ ] Chapter 7
  - [ ] Chapter 8
  - [ ] Chapter 9
