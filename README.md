@@ -4,14 +4,14 @@ The actual content are answers and code covering the book [Land of Lisp](http://
 
 # Land of Lisp book (reading) [97/482]
 
- - [x] Chapter 1
- - [x] Chapter 2
- - [x] Chapter 3
- - [x] Chapter 4
- - [x] Chapter 5
- - [x] Chapter 6
+ - [x] Chapter 1 (intro)
+ - [x] Chapter 2 (guess my numbers)
+ - [x] Chapter 3 (exploring syntax of lisp)
+ - [x] Chapter 4 (conditionals)
+ - [x] Chapter 5 (building a text game engine)
+ - [x] Chapter 6 (printing files)
  - [x] Chapter 6.5 (lambda chapter)
- - [ ] Chapter 7
+ - [x] Chapter 7 (go beyond basic lists)
  - [ ] Chapter 8
  - [ ] Chapter 9
  - [ ] Chapter 10
