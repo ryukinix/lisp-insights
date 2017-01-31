@@ -1,6 +1,13 @@
 ;; Common Lisp Script
 ;; Manoel Vilela
 
+(defpackage :graph-util
+  (:use :cl)
+  (:export :graph->png
+           :ugraph->png
+           :main))
+
+(in-package :graph-util)
 
 
 ;; associative lists
@@ -147,6 +154,8 @@
               (ugraph->dot nodes edges))))
 
 (defun main()
+
+  (in-package :graph-util)
   ;; exotic lists
 
   (cons 1 (cons 2 (cons 3 nil)))
