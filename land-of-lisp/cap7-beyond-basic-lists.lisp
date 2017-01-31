@@ -1,36 +1,14 @@
 ;; Common Lisp Script
 ;; Manoel Vilela
 
-;; exotic lists
-
-(cons 1 (cons 2 (cons 3 nil)))
-'(1 2 3)
-'(1 . (2 . (3 . nil)))
-
-;; representations of lists above are equivalents in its implementation
-;; just conses of cells.
-
-
-;; circular lists
-
-
-(defparameter foo '(1 2 3))
-(setf (cdddr foo) foo) ;; circle list!!!
 
 
 ;; associative lists
-
 (defparameter *drink-order* '((bill . double-espresso)
                               (lisa . samll-drip-coffee)
                               (john . medium-latte)))
 
-(assoc 'lisa *drink-order*)
-(push '(lisa . large-mocha-with-whipped-cream) *drink-order*)
-(assoc 'lisa *drink-order*)
-
-
 ;; visualizing tree-like data
-
 (defparameter *house* '((walls (mortar (cement)
                                        (water)
                                        (sand))
@@ -40,12 +18,10 @@
                                  (curtains)
                         (roof (shingles)
                               (chinmey)))))
-
 ;; this is in someway can be hard to visualize the relations of data
 
+
 ;; lets create a graph
-
-
 (defparameter *wizard-nodes* '((living-room (you are in the living-room.
                                a wizard is snoring loudly on the couch.))
                                (garden (you are in a beatiful garden.
@@ -58,6 +34,9 @@
                                (garden (living-room east door))
                                (attic (living-room downstairs ladder))))
 
+
+(defparameter *max-label-length* 30)
+
 ;; * generating the dot information
 
 
@@ -67,15 +46,6 @@
   (substitute-if #\_ (complement #'alphanumericp) (prin1-to-string exp)))
 
 
-;; substitute-if higher-order function
-(substitute-if 0 #'oddp '(1 2 3 4 5 6 7 8 9 10))
-;; => (0 2 0 4 0 6 0 8 0 10)
-
-;; complement higher-order function
-;; (complement #'oddp) <=> (lambda (x) (not (oddp x)))
-
-(defparameter *max-label-length* 30)
-
 (defun dot-label (exp)
   (if exp
       (let ((s (write-to-string exp :pretty nil))) ;; :pretty nil avoid modify the original exp
@@ -84,10 +54,6 @@
             s))
       ""))
 
-(dot-label (expt 10 35))
-;; => "100000000000000000000000000..."
-(subseq '(1 2 3 4) 0 2)
-;; => (1 2)
 
 (defun nodes->dot (nodes)
   (mapc (lambda (node)
@@ -98,10 +64,6 @@
           (princ "\"];"))
         nodes))
 
-(nodes->dot *wizard-nodes*)
-;; => LIVING_ROOM[label="(LIVING-ROOM (YOU ARE IN TH..."];
-;; => GARDEN[label="(GARDEN (YOU ARE IN A BEATI..."];
-;; => ATTIC[label="(ATTIC (YOU ARE IN THE ATTI..."];
 
 (defun edges->dot (edges)
   (mapc (lambda (node)
@@ -116,28 +78,12 @@
                 (cdr node)))
         edges))
 
-(edges->dot *wizard-edges*)
-;; => LIVING_ROOM->GARDEN[label="(WEST DOOR)"];
-;; => LIVING_ROOM->ATTIC[label="(UPSTAIRS LADDER)"];
-;; => GARDEN->LIVING_ROOM[label="(EAST DOOR)"];
-;; => ATTIC->LIVING_ROOM[label="(DOWNSTAIRS LADDER)"];
 
 (defun graph->dot (nodes edges)
   (princ "digraph{")
   (nodes->dot nodes)
   (edges->dot edges)
   (princ "}"))
-
-(graph->dot *wizard-nodes* *wizard-edges*)
-;; =>
-;; digraph{
-;; LIVING_ROOM[label="(LIVING-ROOM (YOU ARE IN TH..."];
-;; GARDEN[label="(GARDEN (YOU ARE IN A BEATI..."];
-;; ATTIC[label="(ATTIC (YOU ARE IN THE ATTI..."];
-;; LIVING_ROOM->GARDEN[label="(WEST DOOR)"];
-;; LIVING_ROOM->ATTIC[label="(UPSTAIRS LADDER)"];
-;; GARDEN->LIVING_ROOM[label="(EAST DOOR)"];
-;; ATTIC->LIVING_ROOM[label="(DOWNSTAIRS LADDER)"];}
 
 
 (defun dot->png (fname thunk)
@@ -157,20 +103,10 @@
 ;; can be called suspension too
 
 
-
-;; writes "Hello File!" into "testfile.txt"
-(with-open-file (my-stream
-                 "testfile.txt"
-                 :direction :output ;; ??
-                 :if-exists :supersede) ;; ?!?!?
-  (princ "Hello File!" my-stream))
-;; :direction :output => we're only writing to the file and not reading it
-;; :if-exists :supersede => if a file by that name already exists, just too out the old version
-
 ;; note: symbols with prefixed colon are constants, like => :direction :output and so on
 
-(let ((:cigar 5))
-  :cigar)
+;; (let ((:cigar 5))
+;;   :cigar)
 ;; =>
 ;; Compile-time error:
 ;; :CIGAR is a keyword, and cannot be used as a local variable.
@@ -182,8 +118,6 @@
             (lambda ()
               (graph->dot nodes edges))))
 
-(graph->png "wizard-graph.dot" *wizard-nodes* *wizard-edges*)
-;; wow, this works! GREAT.
 
 ;; creating undirected graphs
 
@@ -212,20 +146,87 @@
             (lambda ()
               (ugraph->dot nodes edges))))
 
-(ugraph->png "wizard-graph-undirected.dot"
-             *wizard-nodes*
-             *wizard-edges*)
+(defun main()
+  ;; exotic lists
 
-;; maplist iterating by cdr
-;; maplist itearting by car
-;; map needs a selector
-(mapcar #'print '(a b c))
-;; =>
-;; A
-;; B
-;; C
+  (cons 1 (cons 2 (cons 3 nil)))
+  '(1 2 3)
+  '(1 . (2 . (3 . nil)))
 
-(maplist #'print '(a b c))
-;; (A B C)
-;; (B C)
-;; (C)
+  ;; representations of lists above are equivalents in its implementation
+  ;; just conses of cells.
+
+  ;; association lists (dotted lists)
+  (assoc 'lisa *drink-order*)
+  (push '(lisa . large-mocha-with-whipped-cream) *drink-order*)
+  (assoc 'lisa *drink-order*)
+
+  ;; circular lists
+  (let ((foo '(1 2 3)))
+    (setf (cdddr foo) foo)) ;; circle list!!
+
+  ;; substitute-if higher-order function
+  (substitute-if 0 #'oddp '(1 2 3 4 5 6 7 8 9 10))
+  ;; => (0 2 0 4 0 6 0 8 0 10)
+
+  ;; complement higher-order function
+  ;; (complement #'oddp) <=> (lambda (x) (not (oddp x)))
+
+  (nodes->dot *wizard-nodes*)
+  ;; => LIVING_ROOM[label="(LIVING-ROOM (YOU ARE IN TH..."];
+  ;; => GARDEN[label="(GARDEN (YOU ARE IN A BEATI..."];
+  ;; => ATTIC[label="(ATTIC (YOU ARE IN THE ATTI..."];
+
+  (dot-label (expt 10 35))
+  ;; => "100000000000000000000000000..."
+  (subseq '(1 2 3 4) 0 2)
+  ;; => (1 2)
+  (graph->dot *wizard-nodes* *wizard-edges*)
+  ;; =>
+  ;; digraph{
+  ;; LIVING_ROOM[label="(LIVING-ROOM (YOU ARE IN TH..."];
+  ;; GARDEN[label="(GARDEN (YOU ARE IN A BEATI..."];
+  ;; ATTIC[label="(ATTIC (YOU ARE IN THE ATTI..."];
+  ;; LIVING_ROOM->GARDEN[label="(WEST DOOR)"];
+  ;; LIVING_ROOM->ATTIC[label="(UPSTAIRS LADDER)"];
+  ;; GARDEN->LIVING_ROOM[label="(EAST DOOR)"];
+  ;; ATTIC->LIVING_ROOM[label="(DOWNSTAIRS LADDER)"];}
+  (edges->dot *wizard-edges*)
+  ;; => LIVING_ROOM->GARDEN[label="(WEST DOOR)"];
+  ;; => LIVING_ROOM->ATTIC[label="(UPSTAIRS LADDER)"];
+  ;; => GARDEN->LIVING_ROOM[label="(EAST DOOR)"];
+  ;; => ATTIC->LIVING_ROOM[label="(DOWNSTAIRS LADDER)"];
+
+  ;; writes "Hello File!" into "testfile.txt"
+  (with-open-file (my-stream
+                   "testfile.txt"
+                   :direction :output ;; ??
+                   :if-exists :supersede) ;; ?!?!?
+    (princ "Hello File!" my-stream))
+  ;; :direction :output => we're only writing to the file and not reading it
+  ;; :if-exists :supersede => if a file by that name already exists, just too out the old version
+
+
+  (graph->png "wizard-graph.dot" *wizard-nodes* *wizard-edges*)
+  (ugraph->png "wizard-graph-undirected.dot"
+               *wizard-nodes*
+               *wizard-edges*)
+
+  ;; wow, this works! GREAT.
+
+  ;; maplist iterating by cdr
+  ;; maplist itearting by car
+  ;; map needs a selector
+  (mapcar #'print '(a b c))
+  ;; =>
+  ;; A
+  ;; B
+  ;; C
+
+  (maplist #'print '(a b c))
+  ;; =>
+  ;; (A B C)
+  ;; (B C)
+  ;; (C)
+  )
+;; EOF
