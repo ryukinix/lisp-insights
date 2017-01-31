@@ -162,8 +162,8 @@
   (assoc 'lisa *drink-order*)
 
   ;; circular lists
-  (let ((foo '(1 2 3)))
-    (setf (cdddr foo) foo)) ;; circle list!!
+  ;; (let ((foo '(1 2 3)))
+  ;;   (setf (cdddr foo) foo)) ;; circle list!!
 
   ;; substitute-if higher-order function
   (substitute-if 0 #'oddp '(1 2 3 4 5 6 7 8 9 10))
