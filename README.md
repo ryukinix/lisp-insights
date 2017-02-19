@@ -2,8 +2,8 @@
 A personal repository for annotation about learning lisp patterns.
 The actual content are answers and code covering the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course about Structures and Interpretations of Computer Programs.
 
-# Land of Lisp book (reading) [172/482]
-![progress](http://progressed.io/bar/35)
+# Land of Lisp book (reading) [176/482]
+![progress](http://progressed.io/bar/36)
 
  - [x] Chapter 1 (intro)
  - [x] Chapter 2 (guess my numbers)
