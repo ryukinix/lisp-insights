@@ -51,6 +51,12 @@ Using DEFMETHOD and DEFDESTRUCT, let's dispatch some whoop ass on these vermin!
   "Check if the player is alive"
   (<= *player-health* 0))
 
+(defun monster-dead (m)
+  (<= (monster-health m) 0))
+
+(defun monsters-dead ()
+  (every #'monster-dead *monsters*))
+
 (defun show-player ()
   "If the player is alive, show in REPL your info at each action"
   (fresh-line)
@@ -59,6 +65,40 @@ Using DEFMETHOD and DEFDESTRUCT, let's dispatch some whoop ass on these vermin!
           *player-health*
           *player-agility*
           *player-health*))
+
+(defun randval (n)
+  (1+ (random (max 1 n))))
+
+;; helper functions for player attack
+(defun random-monster ()
+  (let ((m (aref *monsters* (random (length *monsters*)))))
+    (if (monster-dead m)
+        (random-monster)
+        m)))
+
+(defun pick-monster ()
+  (fresh-line)
+  (princ "Monster #:")
+  (let ((x read))
+    (if (not (and (integerp x)
+                  (>= x 1)
+                  (<= x *monster-num*)))
+        (progn (princ "That is not a valid monster number.")
+               (pick-monster))
+        (let ((m (aref *monsters* (1- x))))
+          (if (monster-dead m)
+              (progn (princ "That monster is already dead.")
+                     (pick-monster))
+              m)))))
+
+;; monster management functions
+(defun init-monsters ()
+  (setf *monsters*
+        (map 'vector
+             (lambda (x)
+               (funcall (nth (random (length *monsters-builders*)))
+                        *monster-builders*))
+             (make-array *monster-num*))))
 
 (defun player-attack ()
   "The player-attack function lets us manage a player's attack"
@@ -76,6 +116,8 @@ Using DEFMETHOD and DEFDESTRUCT, let's dispatch some whoop ass on these vermin!
     (otherwise (dotimes (x (1+ (randval (truncate (/ *player-strength* 3)))))
                  (unless (monsters-dead)
                    (monster-hit (random-monster 1)))))))
+
+
 
 (defun game-loop ()
   "The game-loop function handles the repeated cycles of monster
@@ -105,3 +147,4 @@ Using DEFMETHOD and DEFDESTRUCT, let's dispatch some whoop ass on these vermin!
     (princ "You have been killed. Game Over."))
   (when (monsters-dead)
     (princ "Congratulations! You have vanquished all of your foes.")))
+
