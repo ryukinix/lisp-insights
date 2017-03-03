@@ -1,9 +1,9 @@
 # lisp-insights
 A personal repository for annotation about learning lisp patterns.
-The actual content are answers and code covering the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course about Structures and Interpretations of Computer Programs.
+The current content are answers plus code covering of the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course: Structures and Interpretations of Computer Programs.
 
-# Land of Lisp book (reading) [195/482]
-![progress](http://progressed.io/bar/40)
+# Land of Lisp book (reading) [221/482]
+![progress](http://progressed.io/bar/41)
 
  - [x] Chapter 1 (intro)
  - [x] Chapter 2 (guess my numbers)
@@ -15,7 +15,7 @@ The actual content are answers and code covering the book [Land of Lisp](http://
  - [x] Chapter 7 (go beyond basic lists)
  - [x] Chapter 8 (grand theft wumpus)
  - [x] Chapter 9 (advanced datatypes and generic programming)
- - [ ] Chapter 10 (looping with the loop command)
+ - [x] Chapter 10 (looping with the loop command)
  - [ ] Chapter 11
  - [ ] Chapter 12
  - [ ] Chapter 13
