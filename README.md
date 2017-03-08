@@ -3,8 +3,8 @@ A personal repository for annotation about learning lisp patterns.
 The current content are answers plus code covering of the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course: Structures and Interpretations of Computer Programs.
 
 
-# Land of Lisp book (reading) [236/482]
-![progress](http://progressed.io/bar/49)
+# Land of Lisp book (reading) [251/482]
+![progress](http://progressed.io/bar/52)
 
  - [x] Chapter 1 (intro)
  - [x] Chapter 2 (guess my numbers)
@@ -18,7 +18,7 @@ The current content are answers plus code covering of the book [Land of Lisp](ht
  - [x] Chapter 9 (advanced datatypes and generic programming)
  - [x] Chapter 10 (looping with the loop command)
  - [x] Chapter 11 (printing with the format function)
- - [ ] Chapter 12
+ - [x] Chapter 12 (working with streams)
  - [ ] Chapter 13
  - [ ] Chapter 14
  - [ ] Chapter 15
