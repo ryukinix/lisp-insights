@@ -40,14 +40,20 @@
 
 (defpackage :dice-of-doom
   (:use :cl)
-  (:export :main))
+  (:export :main
+           :human
+           :computer
+           :*num-players*
+           :*max-dice*
+           :*board-size*
+           :*board-hexnum*))
 
 (in-package :dice-of-doom)
 
 ;; Dirty part :: Global variables
 (defparameter *num-players* 2 "the number of players in-game")
 (defparameter *max-dice* 3 "max of dice for each cell")
-(defparameter *board-size* 2 "the board size length")
+(defparameter *board-size* 3 "the board size length")
 (defparameter *board-hexnum* (* *board-size* *board-size*) "number of cells")
 
 ;; Representing the Game Board
@@ -106,7 +112,7 @@
 
 ;; Generating a Game Tree
 
-;; + functional
+;; => functional
 (defun game-tree (board player spare-dice first-move)
   "Generate the game tree of moves"
   (list player
@@ -218,6 +224,7 @@
 
 ;; => imperative
 (defun handle-human (tree)
+  "Get the human chosen move given the possibilities"
   (fresh-line)
   (princ "Choose your move: ")
   (let ((moves (caddr tree)))
@@ -232,8 +239,9 @@
     (fresh-line)
     (cadr (nth (1- (read)) moves))))
 
-;; functional
+;; => functional
 (defun winners (board)
+  "Parse the board to detect if someone wins and return a list of winners"
   (let* ((tally (loop for hex across board
                       collect (car hex)))
          (totals (mapcar (lambda (player)
@@ -245,8 +253,9 @@
                          (not (eq (cdr x) best)))
                        totals))))
 
-;; imperative
+;; => imperative
 (defun announce-winner (board)
+  "Print the winner or tie given the board"
   (fresh-line)
   (let ((w (winners board)))
     (if (> (length w) 1)
@@ -255,7 +264,111 @@
 
 ;; => imperative
 (defun play-vs-human (tree)
+  "Start a game vs a human"
   (print-info tree)
   (if (caddr tree)
       (play-vs-human (handle-human tree))
       (announce-winner (cadr tree))))
+
+;; add simple AI based on min-max algorithm
+
+
+;; => functional
+(defun rate-position (tree player)
+  "Tag score (best move) for each branch on tree"
+  (let ((moves (caddr tree)))
+    (if moves
+        (apply (if (eq (car tree) player)
+                   #'max
+                   #'min)
+               (get-ratings tree player))
+        (let ((w (winners (cadr tree))))
+          (if (member player w)
+              (/ 1 (length w))
+              0)))))
+;; => functional
+(defun get-ratings (tree player)
+  "Get the ratings for each branch"
+  (mapcar (lambda (move)
+            (rate-position (cadr move) player))
+          (caddr tree)))
+
+;; => imperative
+(defun handle-computer (tree)
+  "Handle AI moves"
+  (let ((ratings (get-ratings tree (car tree))))
+    (cadr (nth (position (apply #'max ratings) ratings)
+               (caddr tree)))))
+
+;; => imperative
+(defun play-vs-computer (tree)
+  "Play with an AI as enemy"
+  (print-info tree)
+  (cond ((null (caddr tree)) (announce-winner (cadr tree)))
+        ((zerop (car tree)) (play-vs-computer (handle-human tree)))
+        (t (play-vs-computer (handle-computer tree)))))
+
+(defun human ()
+  "Start a play-vs-human game with a random board"
+  (play-vs-human (game-tree (gen-board) 0 0 t)))
+
+(defun computer ()
+  "Start a play-vs-computer game with a random board"
+  (play-vs-computer (game-tree (gen-board) 0 0 t)))
+
+
+;; :: Optimizations for Functional Style
+
+;; Memoization
+
+;; neighbors
+(let ((old-neighbors (symbol-function 'neighbors))
+      (previous (make-hash-table)))
+  (defun neighbors (pos)
+    (or (gethash pos previous)
+        (setf (gethash pos previous)
+              (funcall old-neighbors pos)))))
+
+;; game-tree
+(let ((old-game-tree (symbol-function 'game-tree))
+      (previous (make-hash-table :test #'equalp)))
+  (defun game-tree (&rest rest)
+    (or (gethash rest previous)
+        (setf (gethash rest previous) (apply old-game-tree rest)))))
+
+
+;; rate-position
+(let ((old-rate-position (symbol-function 'rate-position))
+      (previous (make-hash-table)))
+  (defun rate-position (tree player)
+    (let ((tab (gethash player previous)))
+      (unless tab
+        (setf tab (setf (gethash player previous) (make-hash-table))))
+      (or (gethash tree tab)
+          (setf (gethash tree tab)
+                (funcall old-rate-position tree player))))))
+
+
+;; NOTE: You use memoization for optimizing the performance of code
+;; written in the functional style. However, memoization code is not,
+;; in itself, written in the functional style. It cannot be, since
+;; it requires you to maintain and update a table of previous calls
+;; to the target function.
+
+
+;; Tail Call Optimization
+
+;; => re-write as tail call recursive
+(defun add-new-dice (board player spare-dice)
+  (labels ((f (lst n acc)
+             (cond ((zerop n) (append (reverse acc) lst))
+                   ((null lst) (reverse acc))
+                   (t (let ((cur-player (car lst))
+                            (cur-dice (cadar lst)))
+                      (if (and (eq cur-player player)
+                               (< cur-dice *max-dice*))
+                          (f (cdr lst)
+                             (1- n)
+                             (cons (list cur-player (1+ cur-dice )) acc))
+                          (f (cdr lst) n (cons (car lst) acc))))))))
+    (board-array (f (coerce board 'list) spare-dice nil))))
