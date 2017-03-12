@@ -3,8 +3,8 @@ A personal repository for annotation about learning lisp patterns.
 The current content are answers plus code covering of the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course: Structures and Interpretations of Computer Programs.
 
 
-# Land of Lisp book (reading) [302/482]
-![progress](http://progressed.io/bar/62)
+# Land of Lisp book (reading) [320/482]
+![progress](http://progressed.io/bar/66)
 
 
  - [x] Section I: Lisp is Power
