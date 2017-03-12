@@ -174,7 +174,7 @@
              (cadr (aref board pos))))
     (mapcan (lambda (src)
               (when (eq (player src) cur-player)
-                (mapcar (lambda (dst)
+                (mapcan (lambda (dst)
                           (when (and (not (eq (player dst) cur-player))
                                      (> (dice src) (dice dst)))
                             (list (list (list src dst)
@@ -183,8 +183,8 @@
                                                    (+ spare-dice (dice dst))
                                                    nil)))))
                         (neighbors src))))
-              (loop for n below *board-hexnum*
-                    collect n))))
+            (loop for n below *board-hexnum*
+                  collect n))))
 
 ;; NOTE: Many of the functions in this chapter have inefficiencies to keep things simple.
 ;;       We'll fix may of these in future versions of the game. (next chapters)
