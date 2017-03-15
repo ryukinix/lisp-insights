@@ -1,6 +1,12 @@
 ;; Common Lisp Script
 ;; Manoel Vilela
 
+
+(defpackage :text-game-engine
+  (:use :cl))
+
+(in-package :text-game-engine)
+
 ;; node (description)
 (defparameter *nodes* '((living-room (you are in the living-room.
                                       a wizard is snoring loudly on the couch.))
@@ -246,7 +252,9 @@
    and print the output"
   (print (cons 'command-execute-> `(,command)))
   (print (cons 'output-of-command-> (eval command))))
+
 (defun run-tests (tests)
   (mapcar #'eval-printing tests))
 
-(run-tests *tests*)
+(eval-when (:compile-toplevel)
+  (run-tests *tests*))
