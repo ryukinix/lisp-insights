@@ -2,11 +2,6 @@
 ;; Manoel Vilela
 
 
-(defpackage :text-game-engine
-  (:use :cl))
-
-(in-package :text-game-engine)
-
 ;; node (description)
 (defparameter *nodes* '((living-room (you are in the living-room.
                                       a wizard is snoring loudly on the couch.))
@@ -47,7 +42,7 @@
 
 
 ;; commands whose the user can be type at repl
-(defparameter *allowed-commands* '(inventory look walk pickup drop))
+(defparameter *allowed-commands* '(inventory look walk pickup drop help))
 
 ;; a lot of tests for running
 ;; on the end of that script
@@ -256,5 +251,5 @@
 (defun run-tests (tests)
   (mapcar #'eval-printing tests))
 
-(eval-when (:compile-toplevel)
-  (run-tests *tests*))
+(defun simple-test ()
+  (princ (princ 'quit)))
