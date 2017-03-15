@@ -1,7 +1,7 @@
 ;; Common Lisp Script
 ;; Manoel Vilela
 
-(load "cap7-beyond-basic-lists") ;; load package on namespace :graph-until
+(load "cap7-beyond-basic-lists") ;; load package on namespace :graph-util
 
 ;; functions:
 ;; (graph-util:ugraph->png 'fname 'nodes 'edges)
