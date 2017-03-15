@@ -7,6 +7,26 @@
 ;; NOTE: This chapter has a lazy evaluation system very similar
 ;;       to discussed on the lectures about STREAMS (6A-6B) of SICP at MIT.
 
+(defpackage :lazy
+  (:use :cl)
+  (:export :lazy
+           :force
+           :lazy-cons
+           :lazy-car
+           :lazy-cdr
+           :lazy-nil
+           :lazy-null
+           :make-lazy
+           :take
+           :take-all
+           :lazy-mapcar
+           :lazy-mapcan
+           :lazy-find-if
+           :lazy-nth
+           :*integers*))
+
+(in-package :lazy)
+
 (defmacro lazy (&body body)
   (let ((forced (gensym))
         (value (gensym)))
