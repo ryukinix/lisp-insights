@@ -40,8 +40,7 @@
 
 (defpackage :dice-of-doom
   (:use :cl)
-  (:export :main
-           :human
+  (:export :human
            :computer
            :*num-players*
            :*max-dice*
