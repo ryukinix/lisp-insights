@@ -40,12 +40,29 @@
 
 (defpackage :dice-of-doom
   (:use :cl)
-  (:export :human
-           :computer
-           :*num-players*
+  (:export :*num-players*
            :*max-dice*
            :*board-size*
-           :*board-hexnum*))
+           :*board-hexnum*
+           :gen-board
+           :add-passing-move
+           :attacking-moves
+           :add-new-dice
+           :print-info
+           :board-attack
+           :add-new-dice
+           :moves
+           :game-tree
+           :neighbors
+           :announce-winner
+           :get-ratings
+           :rate-position
+           :handle-computer
+           :handle-human
+           :play-vs-computer
+           :play-vs-human
+           :computer
+           :human))
 
 (in-package :dice-of-doom)
 
@@ -197,22 +214,45 @@
 
 ;; :: Reinforcements
 ;; => functional
+;; NOTE: OLD-VERSION, NOT TAIL RECURSIVE
+;; (defun add-new-dice (board player spare-dice)
+;;   "Add reinforcements at player cells on board based on spare-dice
+;;    + TEST
+;;    > (add-new-dice #((0 1) (1 3) (0 2) (1 1)) 0 2)
+;;    #((0 2) (1 3) (0 3) (1 1))"
+;;   (labels ((f (list n)
+;;              (cond ((null list) nil)
+;;                    ((zerop n) list)
+;;                    (t (let ((cur-player (caar list))
+;;                             (cur-dice (cadar list)))
+;;                         (if (and (eq cur-player player)
+;;                                  (< cur-dice *max-dice*))
+;;                             (cons (list cur-player (1+ cur-dice))
+;;                                   (f (cdr list) (1- n)))
+;;                             (cons (car list) (f (cdr list) n))))))))
+;;     (board-array (f (coerce board 'list) spare-dice))))
+
+
+
+;; Tail Call Optimization
+
+;; => re-write as tail call recursive
+
 (defun add-new-dice (board player spare-dice)
-  "Add reinforcements at player cells on board based on spare-dice
-   + TEST
-   > (add-new-dice #((0 1) (1 3) (0 2) (1 1)) 0 2)
-   #((0 2) (1 3) (0 3) (1 1))"
-  (labels ((f (list n)
-             (cond ((null list) nil)
-                   ((zerop n) list)
-                   (t (let ((cur-player (caar list))
-                            (cur-dice (cadar list)))
+  (labels ((f (lst n acc)
+             (cond ((zerop n) (append (reverse acc) lst))
+                   ((null lst) (reverse acc))
+                   (t (let ((cur-player (car lst))
+                            (cur-dice (cadar lst)))
                         (if (and (eq cur-player player)
                                  (< cur-dice *max-dice*))
-                            (cons (list cur-player (1+ cur-dice))
-                                  (f (cdr list) (1- n)))
-                            (cons (car list) (f (cdr list) n))))))))
-    (board-array (f (coerce board 'list) spare-dice))))
+                            (f (cdr lst)
+                               (1- n)
+                               (cons (list cur-player (1+ cur-dice )) acc))
+                            (f (cdr lst) n (cons (car lst) acc))))))))
+    (board-array (f (coerce board 'list) spare-dice nil))))
+
+
 
 ;; => imperative
 (defun print-info (tree)
@@ -353,21 +393,3 @@
 ;; in itself, written in the functional style. It cannot be, since
 ;; it requires you to maintain and update a table of previous calls
 ;; to the target function.
-
-
-;; Tail Call Optimization
-
-;; => re-write as tail call recursive
-(defun add-new-dice (board player spare-dice)
-  (labels ((f (lst n acc)
-             (cond ((zerop n) (append (reverse acc) lst))
-                   ((null lst) (reverse acc))
-                   (t (let ((cur-player (car lst))
-                            (cur-dice (cadar lst)))
-                      (if (and (eq cur-player player)
-                               (< cur-dice *max-dice*))
-                          (f (cdr lst)
-                             (1- n)
-                             (cons (list cur-player (1+ cur-dice )) acc))
-                          (f (cdr lst) n (cons (car lst) acc))))))))
-    (board-array (f (coerce board 'list) spare-dice nil))))
