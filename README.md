@@ -4,7 +4,7 @@ The current content are answers plus code covering of the book [Land of Lisp](ht
 
 
 # Land of Lisp book (reading) [386/482]
-![progress](http://progressed.io/bar/80)
+![progress](http://progressed.io/bar/81)
 
 
  - [x] Section I: Lisp is Power
