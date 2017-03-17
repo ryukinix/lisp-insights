@@ -15,6 +15,14 @@
 ;; NOTE: this web server is adapted from 'http.lisp' created by Ron Garret.
 
 ;; Decoding the Values of Request Parameters
+(ql:quickload 'usocket)
+
+(defpackage :webserver
+  (:use :cl :usocket)
+  (:export :serve)
+  (:shadow :usocket))
+
+(in-package :webserver)
 
 (defun http-char (c1 c2 &optional (default #\Space))
   (let ((code (parse-integer
@@ -104,8 +112,6 @@ bar: abc, 123
         (read-sequence content stream)
         (parse-params content)))))
 
-(ql:quickload 'usocket)
-(use-package 'usocket)
 
 ;; The server function is briefly modified to working with SBCL and USOCKET
 
@@ -138,14 +144,14 @@ bar: abc, 123
             (format t "<html>Nice to meet you, ~a!</html>" (cdr name))))
       (princ "ERROR 404 - Sorry... I don't know that page")))
 
-(hello-request-handler "lolcats" '() '())
+;; (hello-request-handler "lolcats" '() '())
 ;; => ERROR 404 - Sorry... I don't know that page
 
-(hello-request-handler "greeting" '() ())
+;; (hello-request-handler "greeting" '() ())
 ;; => <html><form>What is your name?<input name='name'/></form></html>
 
 ;; Executing the server...
-(serve #'hello-request-handler)
+;; (serve #'hello-request-handler)
 ;; You can access this server on
 ;; 127.0.0.1:8080/greeting
 
