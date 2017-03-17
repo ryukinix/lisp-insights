@@ -6,15 +6,23 @@
 (load "cap18-dice-of-doom-v2") ;; as :dice-of-doom-v2 package
 (load "cap18-lazy-programming") ;; as :lazy package
 
-(defpackage :web-dice-of-doom
+(defpackage :dice-of-doom-v3
   (:use :cl :svg :dice-of-doom-v2 :lazy :webserver)
   (:export :main
            :gen-board
+           :attacking-moves
+           :handle-human
+           :handle-computer
+           :get-ratings
+           :limit-tree-depth
+           :*num-players*
+           :*die-colors*
+           :*ai-level*
            :*board-width* :*board-height*
            :*board-scale* :*top-offset*
            :*dice-scale*  :*dot-size*))
 
-(in-package :web-dice-of-doom)
+(in-package :dice-of-doom-v3)
 
 
 (defparameter *board-width* 900)
@@ -147,29 +155,38 @@
                                   (lazy-mapcar #'caar (caddr tree)))))))
 
 
+
 (defun dod-request-handler (path header params)
   (declare (ignore header))
   (if (equal path "game.html")
-      (progn (princ "<!doctype html>")
-             (tag center ()
-               (princ "Welcome to DICE OF DOOM!")
-               (tag br ())
-               (let ((chosen (assoc 'chosen params)))
-                 (when (or (not *cur-game-tree*)
-                           (not chosen))
-                   (setf chosen nil)
-                   (web-initialize))
-                 (cond ((lazy-null (caddr *cur-game-tree*))
-                        (web-announce-winner (cadr *cur-game-tree*)))
-                       ((zerop (car *cur-game-tree*))
-                        (web-handle-human
-                         (when chosen
-                           (read-from-string (cdr chosen)))))
-                       (t (web-handle-computer))))
-               (tag br ())
-               (draw-dod-page *cur-game-tree* *from-tile*)))
+      (progn (html
+              (body
+               (tag center ()
+                    (princ "Welcome to DICE OF DOOM!")
+                    (tag br ())
+                    (let ((chosen (assoc 'chosen params)))
+                      (when (or (not *cur-game-tree*)
+                                (not chosen))
+                        (setf chosen nil)
+                        (web-initialize))
+                      (cond ((lazy-null (caddr *cur-game-tree*))
+                             (web-announce-winner (cadr *cur-game-tree*)))
+                            ((zerop (car *cur-game-tree*))
+                             (web-handle-human
+                              (when chosen
+                                (read-from-string (cdr chosen)))))
+                            (t (web-handle-computer))))
+                    (tag br ())
+                    (draw-dod-page *cur-game-tree* *from-tile*)))))
       (princ "Sorry... I don't know that page.")))
 
 
 (defun main ()
   (serve #'dod-request-handler))
+
+
+;; NOTE:
+;; UNFORTUNATELY THIS EXAMPLE DOESN'T WORKS ON MODERN BROWSERS
+;; BECAUSE THE BAD IMPLEMENTATION OF :WEBSERVER WITHOUT SEND A STANDARD HEADER.
+
+;; By the way, the svg drawing is fucked up too. GREAT.

@@ -19,8 +19,7 @@
 
 (defpackage :webserver
   (:use :cl :usocket)
-  (:export :serve)
-  (:shadow :usocket))
+  (:export :serve))
 
 (in-package :webserver)
 

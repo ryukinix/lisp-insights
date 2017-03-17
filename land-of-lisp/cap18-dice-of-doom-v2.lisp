@@ -13,6 +13,7 @@
            :gen-board
            :game-tree
            :player-letter
+           :*ai-level*
            :*num-players*
            :*max-dice*
            :*board-size*
