@@ -51,7 +51,9 @@
            :print-info
            :board-attack
            :add-new-dice
+           :player-letter
            :moves
+           :winners
            :game-tree
            :neighbors
            :announce-winner

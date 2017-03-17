@@ -7,7 +7,12 @@
 (defpackage :dice-of-doom-v2
   (:use :cl :dice-of-doom :lazy)
   (:export :human
+           :winners
            :computer
+           :handle-computer
+           :gen-board
+           :game-tree
+           :player-letter
            :*num-players*
            :*max-dice*
            :*board-size*
