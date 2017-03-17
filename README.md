@@ -3,8 +3,8 @@ A personal repository for annotation about learning lisp patterns.
 The current content are answers plus code covering of the book [Land of Lisp](http://www.landoflisp.com) and the insights at the MIT 6.001 Course: Structures and Interpretations of Computer Programs.
 
 
-# Land of Lisp book (reading) [400/482]
-![progress](http://progressed.io/bar/82)
+# Land of Lisp book (reading) [415/482]
+![progress](http://progressed.io/bar/86)
 
 
  - [x] Section I: Lisp is Power
@@ -30,7 +30,7 @@ The current content are answers plus code covering of the book [Land of Lisp](ht
    - [x] Chapter 16 (The Magic of Lisp Macros)
    - [x] Chapter 17 (Domain-Specific Languages)
    - [x] Chapter 18 (Lazy Programming)
-   - [ ] Chapter 19 (Creating a Graphical, Web-Based Version of Dice of Doom)
+   - [x] Chapter 19 (Creating a Graphical, Web-Based Version of Dice of Doom)
    - [ ] Chapter 20 (Making Dice of Doom More Fun)
 
 
