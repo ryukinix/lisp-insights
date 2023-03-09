@@ -4,8 +4,6 @@ The current content are answers plus code covering of the book [Land of Lisp](ht
 
 
 # Land of Lisp book (reading) [482/482]
-![progress](http://progressed.io/bar/100)
-
 
  - [x] Section I: Lisp is Power
    - [x] Chapter 1 (intro)
@@ -36,7 +34,7 @@ The current content are answers plus code covering of the book [Land of Lisp](ht
 
 
 # [MIT 6.001 Structures and Interpretations of Computer Programs](https://www.youtube.com/watch?v=2Op3QLzMgSY&list=PLE18841CABEA24090)
-![progress](http://progressed.io/bar/100)
+
  - [x] Lecture 1A
  - [x] Lecture 1B
  - [x] Lecture 2A
